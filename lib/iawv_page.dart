@@ -23,53 +23,62 @@ class _IAWVPageState extends State<IAWVPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text('InAppWebView Example'),
-          ),
-          body: Container(
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    child: InAppWebView(
-                      // initialFile: 'assets/index.html',
-                      initialOptions: InAppWebViewGroupOptions(),
-                      onWebViewCreated: (InAppWebViewController controller) {
-                        this.controller = controller;
-                        controller.loadFile(assetFilePath: 'assets/index.html');
-                      },
-                      onLoadStop: (controller, url) async {
-                        await controller.injectJavascriptFileFromAsset(
-                            assetFilePath: 'assets/web5.js');
-                        await controller.injectJavascriptFileFromAsset(
-                            assetFilePath: 'assets/scripts.js');
-                        await controller.callAsyncJavaScript(functionBody: '''
+      home: Builder(
+        builder: (BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('InAppWebView Example'),
+            ),
+            body: Container(
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      child: InAppWebView(
+                        // initialFile: 'assets/index.html',
+                        initialOptions: InAppWebViewGroupOptions(),
+                        onWebViewCreated: (InAppWebViewController controller) {
+                          this.controller = controller;
+                          controller.loadFile(
+                              assetFilePath: 'assets/index.html');
+                        },
+                        onLoadStop: (controller, url) async {
+                          await controller.injectJavascriptFileFromAsset(
+                              assetFilePath: 'assets/web5.js');
+                          await controller.injectJavascriptFileFromAsset(
+                              assetFilePath: 'assets/scripts.js');
+                          await controller.callAsyncJavaScript(functionBody: '''
 const { web5, did: myDid } = await window.Web5.Web5.connect();
 window.web5 = web5;
 window.myDid = myDid;
 ''');
-                      },
-                      onLoadHttpError:
-                          (controller, url, statusCode, description) => print(
-                        'HTTP error $statusCode: $description',
-                      ),
-                      onConsoleMessage: (controller, consoleMessage) => print(
-                        'console message: ${consoleMessage.messageLevel} : ${consoleMessage.message}',
+                        },
+                        onLoadHttpError:
+                            (controller, url, statusCode, description) => print(
+                          'HTTP error $statusCode: $description',
+                        ),
+                        onConsoleMessage: (controller, consoleMessage) => print(
+                          'console message: ${consoleMessage.messageLevel} : ${consoleMessage.message}',
+                        ),
                       ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              final did = await getMyDid(controller);
-              print(did);
-            },
-            child: const Icon(Icons.add),
-          )),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () async {
+                final did = await getMyDid(controller);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(did)),
+                );
+                print(did);
+              },
+              child: const Icon(Icons.perm_identity),
+            ),
+          );
+        },
+      ),
     );
   }
 }
