@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_exp/iawv_page.dart';
+import 'package:wallet_exp/app.dart';
 
 // InAppLocalhostServer localhostServer = InAppLocalhostServer();
 
@@ -9,8 +9,16 @@ void main() async {
 
   runApp(
     MaterialApp(
-      theme: ThemeData(useMaterial3: true),
-      home: const IAWVPage(),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        /* light theme settings */
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        /* dark theme settings */
+      ),
+      themeMode: ThemeMode.dark,
+      home: const App(),
     ),
   );
 }
