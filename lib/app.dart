@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:wallet_exp/web5_calls.dart';
+import 'package:uni_links/uni_links.dart';
+import 'dart:async';
+
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -18,10 +21,25 @@ class _AppState extends State<App> {
     super.initState();
   }
 
+  StreamSubscription? _sub;
+
   @override
   void dispose() {
     super.dispose();
   }
+
+
+  void _initDeepLinkListener() async {
+    _sub = getUriLinksStream().listen((Uri? uri) {
+      if (uri != null) {
+        // Handle your deep link
+        print('Got a deep link: $uri');
+      }
+    }, onError: (err) {
+      // Handle exception by warning the user their action did not succeed
+      print('Failed to open deep link: $err');
+    });
+  }  
 
   @override
   Widget build(BuildContext context) {
