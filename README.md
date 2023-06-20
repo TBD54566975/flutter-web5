@@ -2,6 +2,12 @@
 
 A new Flutter project.
 
+Shows how to embed webviews and run web5 in an app that uses flutter. 
+
+
+![image](https://github.com/TBD54566975/flutter-web5/assets/14976/cbb4ec4d-5bd2-4314-b815-034af7cd04a1)
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
