@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_exp/app.dart';
-
-// InAppLocalhostServer localhostServer = InAppLocalhostServer();
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wallet_exp/src/app.dart';
+import 'package:wallet_exp/src/routing/deep_links.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // localhostServer.start();
+
+  final deepLinks = DeepLinks();
+  await deepLinks.initDeepLinks();
 
   runApp(
-    MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.light,
-        /* light theme settings */
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        /* dark theme settings */
-      ),
-      themeMode: ThemeMode.dark,
-      home: const App(),
+    ProviderScope(
+      child: App(),
     ),
   );
 }

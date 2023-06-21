@@ -11,18 +11,21 @@ dependencies:
   flutter:
     sdk: flutter
 
-  uni_links: ^0.5.1    
-  archive: ^3.3.7
+  auto_route: ^7.4.0
   flutter_hooks: ^0.18.6
-  hooks_riverpod: ^2.3.6
-  webview_flutter: ^4.2.2
-  path_provider: ^2.0.15
   flutter_inappwebview: ^5.7.2+3
+  hooks_riverpod: ^2.3.6
+  path_provider: ^2.0.15
+  uni_links: ^0.5.1
+  url_launcher: ^6.1.11
+  webview_flutter: ^4.2.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  auto_route_generator: ^7.1.1
+  build_runner: ^2.4.5
   flutter_lints: ^2.0.0
 
 flutter:
@@ -31,4 +34,3 @@ flutter:
     - assets/index.html
     - assets/scripts.js
     - assets/web5.js
-    - assets/web5.zip

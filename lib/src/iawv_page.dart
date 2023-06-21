@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:wallet_exp/web5_calls.dart';
+import 'package:wallet_exp/src/features/web5/web5_calls.dart';
 
 class IAWVPage extends StatefulWidget {
   const IAWVPage({super.key});

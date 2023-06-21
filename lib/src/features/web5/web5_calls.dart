@@ -9,7 +9,7 @@ Future<String> getMyDid(InAppWebViewController controller) async {
 Future<String> createARecord(InAppWebViewController controller) async {
   final response = await controller.callAsyncJavaScript(functionBody: '''
 window.oneMbyte = new Array(1024 * 1024).join('a');
-window.oneHundredMbyte = new Array(101).join(oneMbyte);
+window.oneHundredMbyte = new Array(10).join(oneMbyte);
 window.blob = new Blob([oneHundredMbyte], {type: "text/plain"});
 const { record, status } = await window.web5.dwn.records.write({
   data: blob,
