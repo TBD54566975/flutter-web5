@@ -1,6 +1,12 @@
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wallet_exp/src/features/web5/web5_js_calls.dart';
 
-class HeadlessBrowser {
+final web5Provider = Provider<Web5Service>((ref) {
+  return Web5Service();
+});
+
+class Web5Service {
   HeadlessInAppWebView? _headlessWebView;
 
   void start() async {
@@ -31,13 +37,21 @@ window.myDid = myDid;
     _headlessWebView?.dispose();
   }
 
-  Future<CallAsyncJavaScriptResult?> callAsync(
-      {required String functionBody,
-      Map<String, dynamic> arguments = const <String, dynamic>{},
-      ContentWorld? contentWorld}) async {
-    return _headlessWebView?.webViewController.callAsyncJavaScript(
-        functionBody: functionBody,
-        arguments: arguments,
-        contentWorld: contentWorld);
+  Future<String?> getMyDid() async {
+    final response = await _headlessWebView?.webViewController
+        .callAsyncJavaScript(functionBody: Web5Js.myDid);
+    return response?.value.toString();
+  }
+
+  Future<String?> createARecord() async {
+    final response = await _headlessWebView?.webViewController
+        .callAsyncJavaScript(functionBody: Web5Js.createRecord());
+    return response?.value.toString();
+  }
+
+  Future<String?> getRecords() async {
+    final response = await _headlessWebView?.webViewController
+        .callAsyncJavaScript(functionBody: Web5Js.getRecords());
+    return response?.value.toString();
   }
 }
