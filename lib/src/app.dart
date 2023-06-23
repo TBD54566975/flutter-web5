@@ -14,8 +14,9 @@ class App extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
-      ref.read(web5Provider).start();
-      return () => ref.read(web5Provider).stop();
+      final web5Service = ref.read(web5Provider);
+      web5Service.start();
+      return () => web5Service.stop();
     }, []);
 
     return MaterialApp.router(
