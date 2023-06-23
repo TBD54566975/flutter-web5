@@ -49,6 +49,16 @@ class AppsPage extends HookConsumerWidget {
                   },
                   child: const Text('Get records')),
             ),
+            const SizedBox(height: Grid.xs),
+            Center(
+              child: FilledButton(
+                  onPressed: () async {
+                    textController.clear();
+                    final result = await web5.createDid();
+                    textController.text = result ?? 'failed';
+                  },
+                  child: const Text('Create DID')),
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(16),

@@ -20,13 +20,6 @@ class Web5Service {
       onLoadStop: (controller, url) async {
         await controller.injectJavascriptFileFromAsset(
             assetFilePath: 'assets/web5.js');
-        await controller.injectJavascriptFileFromAsset(
-            assetFilePath: 'assets/scripts.js');
-        await controller.callAsyncJavaScript(functionBody: '''
-const { web5, did: myDid } = await window.Web5.Web5.connect();
-window.web5 = web5;
-window.myDid = myDid;
-''');
       },
       onConsoleMessage: (controller, consoleMessage) {
         logger.info(consoleMessage);
@@ -54,6 +47,12 @@ window.myDid = myDid;
   Future<String?> getRecords() async {
     final response = await _headlessWebView?.webViewController
         .callAsyncJavaScript(functionBody: Web5Js.getRecords());
+    return response?.value.toString();
+  }
+
+  Future<String?> createDid() async {
+    final response = await _headlessWebView?.webViewController
+        .callAsyncJavaScript(functionBody: Web5Js.createDid);
     return response?.value.toString();
   }
 }

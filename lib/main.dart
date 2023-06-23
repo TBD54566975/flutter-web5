@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:wallet_exp/src/app.dart';
 import 'package:wallet_exp/src/routing/deep_links.dart';
+import 'package:wallet_exp/src/storage/storage_providers.dart';
 
 void main() async {
   Logger.root.onRecord.listen((record) {
@@ -18,7 +20,14 @@ void main() async {
   final deepLinks = DeepLinks();
   await deepLinks.initDeepLinks();
 
+  Hive.initFlutter();
+  final didBox = await createDidBox();
+  await didBox.clear();
+
   runApp(
-    ProviderScope(child: App()),
+    ProviderScope(
+      overrides: [didBoxProvider.overrideWithValue(didBox)],
+      child: App(),
+    ),
   );
 }
