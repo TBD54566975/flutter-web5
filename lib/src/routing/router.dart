@@ -15,7 +15,7 @@ class AppRouter extends $AppRouter {
             AutoRoute(page: ContactsRoute.page),
           ],
         ),
-        AutoRoute(page: CreatePersonaRoute.page),
+        AutoRoute(page: CreatePersonaRoute.page, fullscreenDialog: true),
         AutoRoute(page: ViewPersonaRoute.page),
       ];
 }
