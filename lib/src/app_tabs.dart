@@ -12,7 +12,7 @@ class AppTabs extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AutoTabsRouter(
       routes: const [
-        PersonasRoute(),
+        ListPersonasRoute(),
         AppsRoute(),
         CredentialsRoute(),
         ContactsRoute()
@@ -29,17 +29,25 @@ class AppTabs extends HookConsumerWidget {
               currentIndex: tabsRouter.activeIndex,
               onTap: (index) => tabsRouter.setActiveIndex(index),
               type: BottomNavigationBarType.fixed,
-              items: const [
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.wallet), label: 'Personas'),
-                BottomNavigationBarItem(icon: Icon(Icons.apps), label: 'Apps'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.key), label: 'Credentials'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.contacts), label: 'Contacts'),
+              selectedItemColor: Theme.of(context).colorScheme.primary,
+              selectedLabelStyle: Theme.of(context).textTheme.labelLarge,
+              unselectedLabelStyle: Theme.of(context).textTheme.labelLarge,
+              items: [
+                _bottomNavItem(context, Icons.wallet, 'Personas'),
+                _bottomNavItem(context, Icons.apps, 'Apps'),
+                _bottomNavItem(context, Icons.key, 'Credentials'),
+                _bottomNavItem(context, Icons.contacts, 'Contacts'),
               ],
             ));
       },
+    );
+  }
+
+  BottomNavigationBarItem _bottomNavItem(
+      BuildContext context, IconData icon, String label) {
+    return BottomNavigationBarItem(
+      icon: Icon(icon),
+      label: label,
     );
   }
 }

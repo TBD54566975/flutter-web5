@@ -2,8 +2,8 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
-class ContactsPage extends StatelessWidget {
-  const ContactsPage({super.key});
+class ViewPersonaPage extends StatelessWidget {
+  const ViewPersonaPage({super.key});
 
   @override
   Widget build(BuildContext context) {
