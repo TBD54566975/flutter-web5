@@ -9,9 +9,9 @@ class ContactsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Persona'),
+        title: const Text('Contacts'),
       ),
-      body: const SafeArea(child: Center(child: Text('View Persona'))),
+      body: const SafeArea(child: Center(child: Text('Contacts'))),
     );
   }
 }

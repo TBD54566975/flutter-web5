@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wallet_exp/src/features/web5/web5_service.dart';
+import 'package:wallet_exp/src/shared/grid.dart';
 
 @RoutePage()
 class AppsPage extends HookConsumerWidget {
@@ -14,9 +15,11 @@ class AppsPage extends HookConsumerWidget {
     final web5 = ref.watch(web5Provider);
 
     return Scaffold(
+      appBar: AppBar(title: const Text('Apps')),
       body: SafeArea(
         child: Column(
           children: <Widget>[
+            const SizedBox(height: Grid.xs),
             Center(
               child: FilledButton(
                   onPressed: () async {
@@ -24,8 +27,9 @@ class AppsPage extends HookConsumerWidget {
                     final result = await web5.getMyDid();
                     textController.text = result ?? 'failed';
                   },
-                  child: const Text("Get my DID")),
+                  child: const Text('Get my DID')),
             ),
+            const SizedBox(height: Grid.xs),
             Center(
               child: FilledButton(
                   onPressed: () async {
@@ -33,8 +37,9 @@ class AppsPage extends HookConsumerWidget {
                     final result = await web5.createARecord();
                     textController.text = result ?? 'failed';
                   },
-                  child: const Text("Create a Record")),
+                  child: const Text('Create a Record')),
             ),
+            const SizedBox(height: Grid.xs),
             Center(
               child: FilledButton(
                   onPressed: () async {
@@ -42,7 +47,7 @@ class AppsPage extends HookConsumerWidget {
                     final result = await web5.getRecords();
                     textController.text = result ?? 'failed';
                   },
-                  child: const Text("Get records")),
+                  child: const Text('Get records')),
             ),
             Expanded(
               child: Padding(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wallet_exp/src/features/personas/personas_card.dart';
 import 'package:wallet_exp/src/routing/router.gr.dart';
-import 'package:wallet_exp/src/shared/grid.dart';
+import 'package:wallet_exp/src/shared/bottom_nav_container.dart';
 
 @RoutePage()
 class ListPersonasPage extends HookConsumerWidget {
@@ -18,7 +18,7 @@ class ListPersonasPage extends HookConsumerWidget {
       body: SafeArea(
         child: ListView(
           children: [
-            GestureDetector(
+            InkWell(
               onTap: () => context.router.push(const ViewPersonaRoute()),
               child: PersonasCard(
                 backgroundColor: Theme.of(context).colorScheme.primary,
@@ -28,7 +28,7 @@ class ListPersonasPage extends HookConsumerWidget {
                 asset: 'assets/images/person_hoodie.png',
               ),
             ),
-            GestureDetector(
+            InkWell(
               onTap: () => context.router.push(const ViewPersonaRoute()),
               child: PersonasCard(
                 backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -38,7 +38,7 @@ class ListPersonasPage extends HookConsumerWidget {
                 asset: 'assets/images/person_collar.png',
               ),
             ),
-            GestureDetector(
+            InkWell(
               onTap: () => context.router.push(const ViewPersonaRoute()),
               child: PersonasCard(
                 backgroundColor: Theme.of(context).colorScheme.tertiary,
@@ -51,18 +51,9 @@ class ListPersonasPage extends HookConsumerWidget {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        padding:
-            const EdgeInsets.symmetric(horizontal: Grid.sm, vertical: Grid.sm),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surfaceVariant,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
+      bottomNavigationBar: BottomNavContainer(
         child: FilledButton(
-          onPressed: () => context.router.push(const CreatePersonaRoute()),
+          onPressed: () => context.router.push(CreatePersonaRoute()),
           child: const Text('Create new persona'),
         ),
       ),
