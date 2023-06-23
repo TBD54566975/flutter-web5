@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wallet_exp/src/features/personas/personas_card.dart';
-import 'package:wallet_exp/src/features/web5/web5_service.dart';
 import 'package:wallet_exp/src/routing/router.gr.dart';
 import 'package:wallet_exp/src/shared/grid.dart';
 
@@ -12,8 +11,6 @@ class ListPersonasPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final web5 = ref.watch(web5Provider);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Personas'),

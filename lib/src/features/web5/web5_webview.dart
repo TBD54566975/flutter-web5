@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:wallet_exp/src/features/web5/web5_providers.dart';
 
 class Web5WebView extends HookConsumerWidget {
-  const Web5WebView({super.key});
+  final logger = Logger('Web5WebView');
+  Web5WebView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,12 +33,12 @@ window.myDid = myDid;
 ''');
       },
       onConsoleMessage: (controller, consoleMessage) {
-        print(consoleMessage);
+        logger.info(consoleMessage);
       },
       onLoadHttpError: (controller, url, statusCode, description) {
-        print('HTTP error $statusCode: $description');
+        logger.severe('HTTP error $statusCode: $description');
       },
-      iosOnWebContentProcessDidTerminate: (controller) => print('Dead'),
+      iosOnWebContentProcessDidTerminate: (controller) => logger.severe('Dead'),
     );
   }
 }

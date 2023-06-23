@@ -1,5 +1,6 @@
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:wallet_exp/src/features/web5/web5_js_calls.dart';
 
 final web5Provider = Provider<Web5Service>((ref) {
@@ -7,6 +8,7 @@ final web5Provider = Provider<Web5Service>((ref) {
 });
 
 class Web5Service {
+  final logger = Logger('Web5Service');
   HeadlessInAppWebView? _headlessWebView;
 
   void start() async {
@@ -27,7 +29,7 @@ window.myDid = myDid;
 ''');
       },
       onConsoleMessage: (controller, consoleMessage) {
-        print(consoleMessage);
+        logger.info(consoleMessage);
       },
     );
     _headlessWebView?.run();

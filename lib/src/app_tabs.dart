@@ -24,7 +24,7 @@ class AppTabs extends HookConsumerWidget {
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
         return Scaffold(
-            body: Stack(children: [const Web5WebView(), child]),
+            body: Stack(children: [Web5WebView(), child]),
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: tabsRouter.activeIndex,
               onTap: (index) => tabsRouter.setActiveIndex(index),
