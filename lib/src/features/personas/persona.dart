@@ -19,6 +19,11 @@ class Persona {
         'did': did.toJson(),
       };
 
+  @override
+  String toString() {
+    return 'Persona{name: $name, did: $did}';
+  }
+
   String get asset {
     switch (name) {
       case 'Career':
