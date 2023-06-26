@@ -27,4 +27,9 @@ const { records } = await window.web5.dwn.records.query({
 });
 return JSON.stringify(records.length);
 ''';
+
+  static String get createDid => '''
+const didState = await window.Web5.Web5.did.create('ion')
+return JSON.stringify(didState);
+''';
 }

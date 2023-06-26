@@ -17,5 +17,8 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(page: CreatePersonaRoute.page, fullscreenDialog: true),
         AutoRoute(page: ViewPersonaRoute.page),
+        AutoRoute(page: WelcomeRoute.page),
+        AutoRoute(page: InitialPersonasRoute.page),
+        AutoRoute(page: ImportPersonasRoute.page),
       ];
 }
