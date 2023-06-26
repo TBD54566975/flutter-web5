@@ -23,6 +23,7 @@ import 'package:wallet_exp/src/features/personas/initial_personas_page.dart'
     as _i8;
 import 'package:wallet_exp/src/features/personas/list_personas_page.dart'
     as _i3;
+import 'package:wallet_exp/src/features/personas/persona.dart' as _i13;
 import 'package:wallet_exp/src/features/personas/view_persona_page.dart' as _i4;
 import 'package:wallet_exp/src/features/welcome/welcome_page.dart' as _i2;
 
@@ -44,9 +45,11 @@ abstract class $AppRouter extends _i11.RootStackRouter {
       );
     },
     ListPersonasRoute.name: (routeData) {
+      final args = routeData.argsAs<ListPersonasRouteArgs>(
+          orElse: () => const ListPersonasRouteArgs());
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.ListPersonasPage(),
+        child: _i3.ListPersonasPage(key: args.key),
       );
     },
     ViewPersonaRoute.name: (routeData) {
@@ -54,8 +57,7 @@ abstract class $AppRouter extends _i11.RootStackRouter {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i4.ViewPersonaPage(
-          title: args.title,
-          did: args.did,
+          persona: args.persona,
           key: args.key,
         ),
       );
@@ -135,31 +137,44 @@ class WelcomeRoute extends _i11.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.ListPersonasPage]
-class ListPersonasRoute extends _i11.PageRouteInfo<void> {
-  const ListPersonasRoute({List<_i11.PageRouteInfo>? children})
-      : super(
+class ListPersonasRoute extends _i11.PageRouteInfo<ListPersonasRouteArgs> {
+  ListPersonasRoute({
+    _i12.Key? key,
+    List<_i11.PageRouteInfo>? children,
+  }) : super(
           ListPersonasRoute.name,
+          args: ListPersonasRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'ListPersonasRoute';
 
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+  static const _i11.PageInfo<ListPersonasRouteArgs> page =
+      _i11.PageInfo<ListPersonasRouteArgs>(name);
+}
+
+class ListPersonasRouteArgs {
+  const ListPersonasRouteArgs({this.key});
+
+  final _i12.Key? key;
+
+  @override
+  String toString() {
+    return 'ListPersonasRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
 /// [_i4.ViewPersonaPage]
 class ViewPersonaRoute extends _i11.PageRouteInfo<ViewPersonaRouteArgs> {
   ViewPersonaRoute({
-    required String title,
-    required String did,
+    required _i13.Persona persona,
     _i12.Key? key,
     List<_i11.PageRouteInfo>? children,
   }) : super(
           ViewPersonaRoute.name,
           args: ViewPersonaRouteArgs(
-            title: title,
-            did: did,
+            persona: persona,
             key: key,
           ),
           initialChildren: children,
@@ -173,20 +188,17 @@ class ViewPersonaRoute extends _i11.PageRouteInfo<ViewPersonaRouteArgs> {
 
 class ViewPersonaRouteArgs {
   const ViewPersonaRouteArgs({
-    required this.title,
-    required this.did,
+    required this.persona,
     this.key,
   });
 
-  final String title;
-
-  final String did;
+  final _i13.Persona persona;
 
   final _i12.Key? key;
 
   @override
   String toString() {
-    return 'ViewPersonaRouteArgs{title: $title, did: $did, key: $key}';
+    return 'ViewPersonaRouteArgs{persona: $persona, key: $key}';
   }
 }
 

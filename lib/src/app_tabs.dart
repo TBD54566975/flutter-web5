@@ -10,11 +10,11 @@ class AppTabs extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AutoTabsRouter(
-      routes: const [
+      routes: [
         ListPersonasRoute(),
-        AppsRoute(),
-        CredentialsRoute(),
-        ContactsRoute()
+        const AppsRoute(),
+        const CredentialsRoute(),
+        const ContactsRoute()
       ],
       transitionBuilder: (context, child, animation) => FadeTransition(
         opacity: animation,
