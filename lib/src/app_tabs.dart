@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wallet_exp/src/routing/deep_links.dart';
 import 'package:wallet_exp/src/routing/router.gr.dart';
 
 @RoutePage()
@@ -23,7 +24,7 @@ class AppTabs extends HookConsumerWidget {
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
         return Scaffold(
-            body: child,
+            body: DeepLinks(widget: child),
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: tabsRouter.activeIndex,
               onTap: (index) => tabsRouter.setActiveIndex(index),
