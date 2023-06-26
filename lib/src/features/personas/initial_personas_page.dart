@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
+import 'package:wallet_exp/src/features/personas/persona.dart';
 import 'package:wallet_exp/src/features/personas/personas_providers.dart';
+import 'package:wallet_exp/src/features/web5/did.dart';
 import 'package:wallet_exp/src/features/web5/web5_service.dart';
 import 'package:wallet_exp/src/routing/router.gr.dart';
 import 'package:wallet_exp/src/shared/asset_constants.dart';
@@ -139,35 +143,56 @@ class InitialPersonasPage extends HookConsumerWidget {
     ValueNotifier<LoadingState> careerState,
     ValueNotifier<LoadingState> pageState,
   ) async {
-    final web5 = ref.read(web5Provider);
-    final didBox = ref.read(didBoxProvider);
-
     pageState.value = LoadingState.creating;
 
     personalState.value = LoadingState.creating;
-    final personalDid = await web5.createDid();
-    await didBox.put('Personal', personalDid);
-    await Future.delayed(const Duration(seconds: 1));
+    final personal = await _createPersona(context, ref, 'Personal');
     personalState.value = LoadingState.done;
 
     socialState.value = LoadingState.creating;
-    final socialDid = await web5.createDid();
-    await didBox.put('Social', socialDid);
-    await Future.delayed(const Duration(seconds: 1));
+    // ignore: use_build_context_synchronously
+    final social = await _createPersona(context, ref, 'Social');
     socialState.value = LoadingState.done;
 
     careerState.value = LoadingState.creating;
-    final careerDid = await web5.createDid();
-    await didBox.put('Career', careerDid);
-    await Future.delayed(const Duration(seconds: 1));
+    // ignore: use_build_context_synchronously
+    final career = await _createPersona(context, ref, 'Career');
     careerState.value = LoadingState.done;
 
-    ref.read(personasProvider.notifier).state = {
-      'Personal': personalDid!,
-      'Social': socialDid!,
-      'Career': careerDid!,
-    };
+    ref.read(personasProvider.notifier).state = [
+      personal,
+      social,
+      career,
+    ];
 
     pageState.value = LoadingState.done;
+  }
+
+  Future<Persona> _createPersona(
+    BuildContext context,
+    WidgetRef ref,
+    String name,
+  ) async {
+    final web5 = ref.read(web5Provider);
+    final didBox = ref.read(didBoxProvider);
+    final did = await web5.createDid();
+    if (did == null) {
+      if (context.mounted) throw Exception('Failed to create $name persona');
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to create $name persona'),
+        ),
+      );
+
+      throw Exception('Failed to create $name persona');
+    }
+
+    final persona = Persona(name: name, did: Did.fromJson(jsonDecode(did)));
+    await didBox.put(name, jsonEncode(persona));
+
+    // Fake a delay for the UI
+    await Future.delayed(const Duration(seconds: 1));
+    return persona;
   }
 }

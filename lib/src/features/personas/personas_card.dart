@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_exp/src/shared/asset_constants.dart';
+import 'package:wallet_exp/src/features/personas/persona.dart';
 import 'package:wallet_exp/src/shared/grid.dart';
 
 class PersonasCard extends StatelessWidget {
-  final String title;
-  final String did;
+  final Persona persona;
   final int connections;
   final String lastActivity;
 
   const PersonasCard({
-    required this.title,
-    required this.did,
+    required this.persona,
     required this.connections,
     required this.lastActivity,
     super.key,
@@ -28,9 +26,9 @@ class PersonasCard extends StatelessWidget {
             width: 104,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: _backgroundColor(context, title),
+              color: persona.backgroundColor(context),
             ),
-            child: Image.asset(_asset(context, title)),
+            child: Image.asset(persona.asset),
           ),
           const SizedBox(width: Grid.sm),
           Expanded(
@@ -38,7 +36,7 @@ class PersonasCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  title,
+                  persona.name,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Text(
@@ -55,27 +53,5 @@ class PersonasCard extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Color _backgroundColor(BuildContext context, String title) {
-    switch (title) {
-      case 'Social':
-        return Theme.of(context).colorScheme.secondary;
-      case 'Career':
-        return Theme.of(context).colorScheme.tertiary;
-      default:
-        return Theme.of(context).colorScheme.primary;
-    }
-  }
-
-  String _asset(BuildContext context, String title) {
-    switch (title) {
-      case 'Social':
-        return AssetConstants.personCollar;
-      case 'Career':
-        return AssetConstants.personSuit;
-      default:
-        return AssetConstants.personHoodie;
-    }
   }
 }
