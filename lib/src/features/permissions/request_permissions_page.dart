@@ -2,27 +2,34 @@ import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wallet_exp/src/features/permissions/permissions_request.dart';
+import 'package:wallet_exp/src/features/personas/persona.dart';
+import 'package:wallet_exp/src/features/personas/personas_providers.dart';
 import 'package:wallet_exp/src/shared/bottom_nav_container.dart';
 import 'package:wallet_exp/src/shared/grid.dart';
 
 @RoutePage()
-class RequestPermissionsPage extends StatelessWidget {
+class RequestPermissionsPage extends HookConsumerWidget {
   final logger = Logger('RequestPermissionsPage');
 
   final Uri uri;
   RequestPermissionsPage({required this.uri, super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final permissions =
         PermissionsRequest.fromBase64(uri.queryParameters['req']!);
+    final personas = ref.watch(personasProvider);
+    final selectedPersona = useState<Persona?>(null);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Request Permissions'),
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: Padding(
@@ -84,6 +91,39 @@ class RequestPermissionsPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
+              const SizedBox(height: Grid.lg),
+              Text(
+                'Select Persona',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              DropdownButton(
+                  isExpanded: true,
+                  value: selectedPersona.value,
+                  items: personas
+                      .map<DropdownMenuItem<Persona>>(
+                        (Persona persona) => DropdownMenuItem<Persona>(
+                          value: persona,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                height: 30,
+                                child: CircleAvatar(
+                                  backgroundColor:
+                                      persona.backgroundColor(context),
+                                  child: Image.asset(
+                                    persona.asset,
+                                    height: 20,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: Grid.xxs),
+                              Text(persona.name),
+                            ],
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (item) => selectedPersona.value = item),
             ],
           ),
         ),
@@ -94,11 +134,13 @@ class RequestPermissionsPage extends StatelessWidget {
           children: [
             Expanded(
               child: FilledButton(
-                onPressed: () => _accept(context),
+                onPressed: selectedPersona.value == null
+                    ? null
+                    : () => _accept(context),
                 child: const Text('Accept'),
               ),
             ),
-            const SizedBox(width: Grid.sm),
+            const SizedBox(width: Grid.xs),
             Expanded(
               child: FilledButton(
                 onPressed: () => _reject(context),
