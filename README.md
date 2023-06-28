@@ -1,11 +1,34 @@
-# wallet_exp
+# Web5 Wallet App
 
-- Calling app would request auth with scopes
+## Getting started
 
-  - `wallet:accounts:read`
-  - might need to use cbor to compress
-  - https://identity.foundation/decentralized-web-node/spec/#permissionsrequest
+Install and setup Flutter
 
-- Return DID and permissions grand
-  - DID
-  - https://identity.foundation/decentralized-web-node/spec/#grant
+- https://docs.flutter.dev/get-started/install
+
+## Development
+
+Get packages.
+
+```bash
+flutter pub get
+```
+
+Run the app.
+
+```bash
+flutter run
+```
+
+### Editor setup
+
+If using VSCode, install the Flutter extension and follow the instructions to setup the Flutter SDK.
+https://docs.flutter.dev/get-started/editor?tab=vscode
+
+### Generating code
+
+Currently the routing and localization implementations require code generation. This is only required when changing the routes or adding new translations.
+
+```bash
+./scripts/generate.sh
+```
