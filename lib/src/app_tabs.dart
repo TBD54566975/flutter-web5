@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wallet_exp/src/l10n/app_localizations.dart';
 import 'package:wallet_exp/src/routing/deep_links.dart';
 import 'package:wallet_exp/src/routing/router.gr.dart';
 
@@ -33,10 +34,11 @@ class AppTabs extends HookConsumerWidget {
               selectedLabelStyle: Theme.of(context).textTheme.labelLarge,
               unselectedLabelStyle: Theme.of(context).textTheme.labelLarge,
               items: [
-                _bottomNavItem(context, Icons.wallet, 'Personas'),
-                _bottomNavItem(context, Icons.apps, 'Apps'),
-                _bottomNavItem(context, Icons.key, 'Credentials'),
-                _bottomNavItem(context, Icons.contacts, 'Contacts'),
+                _bottomNavItem(context, Icons.wallet, Loc.of(context).personas),
+                _bottomNavItem(context, Icons.apps, Loc.of(context).apps),
+                _bottomNavItem(context, Icons.key, Loc.of(context).credentials),
+                _bottomNavItem(
+                    context, Icons.contacts, Loc.of(context).contacts),
               ],
             ));
       },

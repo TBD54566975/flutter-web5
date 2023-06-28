@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wallet_exp/src/features/personas/persona.dart';
+import 'package:wallet_exp/src/l10n/app_localizations.dart';
 import 'package:wallet_exp/src/shared/grid.dart';
 
 class PersonasCard extends StatelessWidget {
@@ -40,11 +41,11 @@ class PersonasCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Text(
-                  'Connections: $connections',
+                  '${Loc.of(context).connections}: $connections',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Text(
-                  'Last activity: $lastActivity',
+                  '${Loc.of(context).lastActivity}: $lastActivity',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],

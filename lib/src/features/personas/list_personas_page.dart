@@ -8,6 +8,7 @@ import 'package:logging/logging.dart';
 import 'package:wallet_exp/src/features/personas/persona.dart';
 import 'package:wallet_exp/src/features/personas/personas_card.dart';
 import 'package:wallet_exp/src/features/personas/personas_providers.dart';
+import 'package:wallet_exp/src/l10n/app_localizations.dart';
 import 'package:wallet_exp/src/routing/router.gr.dart';
 import 'package:wallet_exp/src/shared/bottom_nav_container.dart';
 import 'package:wallet_exp/src/storage/storage_providers.dart';
@@ -35,7 +36,7 @@ class ListPersonasPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Personas'),
+        title: Text(Loc.of(context).personas),
       ),
       body: SafeArea(
         child: ListView(
@@ -56,7 +57,7 @@ class ListPersonasPage extends HookConsumerWidget {
       bottomNavigationBar: BottomNavContainer(
         child: FilledButton(
           onPressed: () => context.router.push(CreatePersonaRoute()),
-          child: const Text('Create new persona'),
+          child: Text(Loc.of(context).createNewPersona),
         ),
       ),
     );
